@@ -1,0 +1,10 @@
+mongo:
+  username: "![hE6/r7IqX/xLuNKgZJZX7g==]"
+  password: "![hE6/r7IqX/z3vkOBTF4jcg==]"
+  database: "![hE6/r7IqX/w4HWUOu/OKVQ==]"
+  replica:  "![jRnQ4sYYHVhUK98CFcJXicgrJQkzc00A]"
+  primary:  "![eoYkbJVjiBTBTi2ElhkGY6vaA9ibio8EARoGcvOb6zMwXwFZ1gbjjHwfE52ApkuG]"
+  secondary1: "![eoYkbJVjiBTBTi2ElhkGY6vaA9ibio8ECD4tEXEtAXe78MMk8we0R9bKC0kEBecy]"
+  secondary2: "![eoYkbJVjiBTBTi2ElhkGY6vaA9ibio8EhraPUEHi1RJjFvBsIiSHcRUaSKl8QnE5]"
+  authSource: "![Gx8dr9/jNSs=]"
+ 

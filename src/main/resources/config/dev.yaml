@@ -1,0 +1,9 @@
+app:
+  name: "Checkout System API"
+  appId: "17621772"
+http:
+  port: "8081"
+  timeout: "30000"
+layer: "sys"
+version: "v1"
+context: "fakestore"

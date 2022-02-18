@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="order" format="json">
+      <types:shape format="weave" example="examples/order-example.json"><![CDATA[%dw 2.0
+
+type order = {|
+  title: String, 
+  price: String, 
+  purchased_date: String, 
+  created_by: String
+|} {"example": "{\\\"title\\\":\\\"item1, item2, item3\\\",\\\"price\\\":\\\"3213\\\",\\\"purchased_date\\\":\\\"2020-10-10\\\",\\\"created_by\\\":\\\"Henry Soh\\\"}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#14478144-fe68-467e-8b5c-d2bda006bf41">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="order"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

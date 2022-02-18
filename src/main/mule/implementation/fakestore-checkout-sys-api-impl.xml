@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:mongo="http://www.mulesoft.org/schema/mule/mongo" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mongo/current/mule-mongo.xsd">
+	<flow name="checkout-implFlow" doc:id="14478144-fe68-467e-8b5c-d2bda006bf41" >
+		<logger level="INFO" doc:name="Start storing order into mongo database" doc:id="c45f08ae-05c4-4381-9ef0-f1218e107442" />
+		<set-variable value="#[payload]" doc:name="Set order payload" doc:id="4783c01b-1730-4e8d-a89d-8f8790110c4b" variableName="order" />
+		<mongo:collection-exists doc:name="Check if Collection 'order' exists" doc:id="75efcfe7-ef82-4602-9baf-4a4e8226c251" config-ref="MongoDB_Config" collectionName="order"/>
+		<choice doc:name="Choice" doc:id="f5fbb7e7-0c84-4169-be4c-d2200beb6bf9" >
+			<when expression="#[payload == true]">
+				<mongo:insert-document collectionName="order" doc:name="if Collection 'order' exists, Insert order object" doc:id="f1e536fd-f975-4550-a301-3b0eae1eef36" config-ref="MongoDB_Config">
+					<mongo:document ><![CDATA[#[vars.order]]]></mongo:document>
+				</mongo:insert-document>
+				<logger level="INFO" doc:name="Order has been inserted into order collection" doc:id="6709ba7d-802f-432f-bfdf-be93987cbc25" message="Order has been inserted into order collection"/>
+			</when>
+			<otherwise >
+				<mongo:create-collection doc:name="Create order collection" doc:id="d22a5497-3ef9-4146-8809-b6ee346c2571" config-ref="MongoDB_Config" collectionName="order"/>
+				<mongo:insert-document doc:name="Insert order object" doc:id="437f5a2e-f504-4b6b-9cc5-3efcf2abf728" config-ref="MongoDB_Config" collectionName="order">
+					<mongo:document ><![CDATA[#[vars.order]]]></mongo:document>
+				</mongo:insert-document>
+				<logger level="INFO" doc:name="Order collection created, Order has been inserted into order collection" doc:id="3319b9e4-4b3d-4669-9fcf-f4ac6d2076ce" message="Order collection created, Order has been inserted into order collection"/>
+			</otherwise>
+		</choice>
+		<ee:transform doc:name="order" doc:id="f810bca0-2fb5-4e1d-8352-79e252cfec89" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="End of storing order into mongo database" doc:id="542ef0c7-e0a1-451a-ba8b-e3e8ab0c50ce" message="End of storing order into mongo database"/>
+	</flow>
+</mule>

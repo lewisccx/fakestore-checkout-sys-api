@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:mongo="http://www.mulesoft.org/schema/mule/mongo"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mongo/current/mule-mongo.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
+	
+	  <http:listener-config name="fakestore-checkout-sapi-httpListenerConfig">
+        <http:listener-connection host="0.0.0.0" port="8081" />
+    </http:listener-config>
+    <apikit:config name="fakestore-checkout-sapi-config" api="resource::706f4d0a-e4a3-40fb-8365-ae5ac1f0a8d7:fakestore-checkout-sys-api:1.0.1:raml:zip:fakestore-checkout-sys-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+	<configuration-properties doc:name="Configuration properties" doc:id="15c46c3a-f63a-4928-bc40-04b8bf853e4a" file="config/${mule.env}.yaml" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="500053ba-ca58-41a7-ad01-1da399b64733" file="config/${mule.env}-secure.yaml" key="${mule.key}" >
+		<secure-properties:encrypt algorithm="Blowfish" />
+	</secure-properties:config>
+	<mongo:config name="MongoDB_Config" doc:name="MongoDB Config" doc:id="74f7e928-f65d-4a4b-8495-b97cac223613" >
+		<mongo:connection database="${secure::mongo.database}" username="${secure::mongo.username}" password="${secure::mongo.password}" authenticationMechanism="SCRAM_SHA_1" replicaSetName="${secure::mongo.replica}" authenticationSource="${secure::mongo.authSource}" socketTimeout="${http.timeout}">
+			<tls:context >
+				<tls:trust-store insecure="true" />
+			</tls:context>
+			<mongo:server-addresses >
+				<mongo:server-address host="${secure::mongo.primary}" />
+				<mongo:server-address host="${secure::mongo.secondary1}" />
+				<mongo:server-address host="${secure::mongo.secondary2}" />
+			</mongo:server-addresses>
+		</mongo:connection>
+	</mongo:config>
+	<configuration doc:name="Configuration" doc:id="c09eafeb-759e-4dc9-bf5a-44aed132b4ba" defaultErrorHandler-ref="globalError_Handler" />
+	<api-gateway:autodiscovery apiId="${app.appId}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="406abcd0-4d1a-472a-a690-905b95eb5e6a" flowRef="fakestore-checkout-sapi-main" />
+	<error-handler name="globalError_Handler" doc:id="57c9bf09-2f0f-4f10-a733-37d6f7e9727d" >
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="ffccc898-549e-4ea8-be9a-d9674a566af7" type="MONGO:TIMEOUT">
+			<ee:transform doc:name="MONGO:TIMEOUT" doc:id="bfdf37ac-2110-4d9e-8a47-039804c1348e" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"header":{
+		"apiName": p('app.name'),
+		"apiVersion": 
+		"correlationId": correlationId,
+    }, 
+    "error": {
+		"description": error.description,
+		"status": error.errorType.identifier,
+		"invocationTimestamp": now()
+	}
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="578ec288-6d37-48af-ac35-23c91f11e196" type="ANY">
+			<ee:transform doc:name="ANY" doc:id="53a5738c-d463-4823-980d-163f834262f8" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"header":{
+		"apiName": p('app.name'),
+		"apiVersion": 
+		"correlationId": correlationId,
+    }, 
+    "error": {
+		"description": error.description,
+		"status": error.errorType.identifier,
+		"invocationTimestamp": now()
+	}
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+		</on-error-propagate>
+	</error-handler>
+	
+</mule>
