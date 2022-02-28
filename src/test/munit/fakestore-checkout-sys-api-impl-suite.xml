@@ -137,8 +137,171 @@
 		<munit:validation >
 			<logger level="INFO" doc:name="Logger" doc:id="f2d21eb5-59ff-4323-aa95-0caa03a9464f" message="#[payload]"/>
 			<munit-tools:assert-equals doc:name="Assert equals" doc:id="9b29e71c-d05e-4ec7-b16f-1cff5e161ce4" actual="#[payload.error.status]" expected='#["TIMEOUT"]' message="payload.error.status should be timeout"/>
+			<logger level="INFO" doc:name="Logger" doc:id="a700e0ed-8f99-4546-9dbb-df2fbd01995f" message="#[payload]"/>
 		
 </munit:validation>
 	</munit:test>
+	<munit:test name="fakestore-checkout-sys-api-impl-triggerNotImplementedSuccess" doc:id="271ad0ed-1390-4748-ba02-3a93e3cc2fb4" expectedErrorType="APIKIT:NOT_IMPLEMENTED">
+			<munit:behavior>
+				<munit-tools:mock-when doc:name="Mock when APIKIT:NOT_IMPLEMENTED" doc:id="07d312fd-ec17-4c8d-9b26-efa8619317fa" processor="apikit:router">
+					<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="fakestore-checkout-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return>
+						<munit-tools:error typeId="APIKIT:NOT_IMPLEMENTED" />
+					</munit-tools:then-return>
+				</munit-tools:mock-when>
+			</munit:behavior>
+			<munit:execution>
+				<flow-ref doc:name="Flow Reference to fakestore-checkout-sapi-main" doc:id="fe356268-5b8b-487f-b692-4ca505ba6156" name="fakestore-checkout-sapi-main" />
+			</munit:execution>
+			<munit:validation>
+				<munit-tools:assert-equals doc:name="Assert equals" doc:id="466df359-07b3-4021-9230-dd7acebe9ed4" actual="#[vars.httpStatus]" expected="#[501]" />
+			</munit:validation>
+		</munit:test>
+	<munit:test name="fakestore-checkout-sys-api-impl-triggerBadRequestSuccess" doc:id="a9c82cd6-7183-49e6-ba3f-3dac8da29d3a" expectedErrorType="APIKIT:BAD_REQUEST">
+			<munit:behavior>
+				<munit-tools:mock-when doc:name="Mock when APIKIT:BAD_REQUEST" doc:id="7bb346b9-4152-415b-9df5-67aeb888ec71" processor="apikit:router">
+					<munit-tools:with-attributes>
+						<munit-tools:with-attribute whereValue="fakestore-checkout-sapi-config" attributeName="config-ref" />
+					</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:BAD_REQUEST" />
+				</munit-tools:then-return>
+				</munit-tools:mock-when>
+			</munit:behavior>
+			<munit:execution>
+				<flow-ref doc:name="Flow Reference to fakestore-checkout-sapi-main" doc:id="16ff0953-476f-41c4-a93d-87ff705df6da" name="fakestore-checkout-sapi-main" />
+			</munit:execution>
+			<munit:validation>
+				<munit-tools:assert-equals doc:name="Assert equals" doc:id="f58c4e11-72ff-4619-9757-f61965f2c4d9" actual="#[vars.httpStatus]" expected="#[400]" />
+			</munit:validation>
+		</munit:test>
+	<munit:test name="fakestore-checkout-sys-api-impl-triggerNotFoundSuccess" doc:id="2d62c50a-9e8e-418b-8fbe-62c74155f1b0" expectedErrorType="APIKIT:NOT_FOUND">
+			<munit:behavior>
+				<munit-tools:mock-when doc:name="Mock when APIKIT:BAD_REQUEST" doc:id="ef614d50-2e74-4bdd-b876-01b7c1b5fc06" processor="apikit:router">
+					<munit-tools:with-attributes>
+						<munit-tools:with-attribute whereValue="fakestore-checkout-sapi-config" attributeName="config-ref" />
+					</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_FOUND" />
+				</munit-tools:then-return>
+				</munit-tools:mock-when>
+			</munit:behavior>
+			<munit:execution>
+				<flow-ref doc:name="Flow Reference to fakestore-checkout-sapi-main" doc:id="bda97f1e-a62d-43ae-b2e6-00b3780ad47c" name="fakestore-checkout-sapi-main" />
+			</munit:execution>
+			<munit:validation>
+				<munit-tools:assert-equals doc:name="Assert equals" doc:id="70025c88-e7cb-4bb1-b472-47a65dd24143" actual="#[vars.httpStatus]" expected="#[404]" />
+			</munit:validation>
+		</munit:test>
+	<munit:test name="fakestore-checkout-sys-api-impl-triggerMethodNotAllowedSuccess" doc:id="a068fa2c-9378-420f-bb36-bb6944684bf6" expectedErrorType="APIKIT:METHOD_NOT_ALLOWED">
+			<munit:behavior>
+				<munit-tools:mock-when doc:name="Mock when APIKIT:METHOD_NOT_ALLOWED" doc:id="d5d82fa8-2058-4648-8393-4ada50efbf30" processor="apikit:router">
+					<munit-tools:with-attributes>
+						<munit-tools:with-attribute whereValue="fakestore-checkout-sapi-config" attributeName="config-ref" />
+					</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:METHOD_NOT_ALLOWED" />
+				</munit-tools:then-return>
+				</munit-tools:mock-when>
+			</munit:behavior>
+			<munit:execution>
+				<flow-ref doc:name="Flow Reference to fakestore-checkout-sapi-main" doc:id="da5ac6f7-4fe3-4ee0-ae31-37417e598fed" name="fakestore-checkout-sapi-main" />
+			</munit:execution>
+			<munit:validation>
+				<munit-tools:assert-equals doc:name="Assert equals" doc:id="2af33753-4277-48eb-adc1-99ef86900804" actual="#[vars.httpStatus]" expected="#[405]" />
+			</munit:validation>
+		</munit:test>
+	<munit:test name="fakestore-checkout-sys-api-impl-triggerNotAcceptableSuccess" doc:id="83496216-5015-440a-9396-1102af39f5b0" expectedErrorType="APIKIT:NOT_ACCEPTABLE">
+			<munit:behavior>
+				<munit-tools:mock-when doc:name="Mock when APIKIT:NOT_ACCEPTABLE" doc:id="cbba45fe-2f91-4184-a60e-87edb9167a25" processor="apikit:router">
+					<munit-tools:with-attributes>
+						<munit-tools:with-attribute whereValue="fakestore-checkout-sapi-config" attributeName="config-ref" />
+					</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId=" APIKIT:NOT_ACCEPTABLE" />
+				</munit-tools:then-return>
+				</munit-tools:mock-when>
+			</munit:behavior>
+			<munit:execution>
+				<flow-ref doc:name="Flow Reference to fakestore-checkout-sapi-main" doc:id="aca7c4cc-bc93-4640-a58e-72aaeefea3fc" name="fakestore-checkout-sapi-main" />
+			</munit:execution>
+			<munit:validation>
+				<munit-tools:assert-equals doc:name="Assert equals" doc:id="6f433de0-06a9-4a52-b9f0-aca7278f564f" actual="#[vars.httpStatus]" expected="#[406]" />
+			</munit:validation>
+		</munit:test>
+	<munit:test name="fakestore-checkout-sys-api-impl-triggerUnsupportedMediaTypeSuccess" doc:id="ac04c850-6f38-4619-9ed4-d515e486a04b" expectedErrorType="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+			<munit:behavior>
+				<munit-tools:mock-when doc:name="Mock when APIKIT:UNSUPPORTED_MEDIA_TYPE" doc:id="55543eac-6f8d-4e43-b61e-61c5196a7998" processor="apikit:router">
+					<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="fakestore-checkout-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return>
+						<munit-tools:error typeId="APIKIT:UNSUPPORTED_MEDIA_TYPE" />
+					</munit-tools:then-return>
+				</munit-tools:mock-when>
+			</munit:behavior>
+			<munit:execution>
+				<flow-ref doc:name="Flow Reference to fakestore-checkout-sapi-main" doc:id="9873ea09-49b5-403d-8bc4-92b835884244" name="fakestore-checkout-sapi-main" />
+			</munit:execution>
+			<munit:validation>
+				<munit-tools:assert-equals doc:name="Assert equals" doc:id="aa8138d4-bfab-4953-87ca-f7ba16886e07" actual="#[vars.httpStatus]" expected="#[415]" />
+			</munit:validation>
+		</munit:test>
+	<munit:test name="fakestore-checkout-sys-api-impl-triggerHttpTimeoutSuccess" doc:id="a5642c8d-ac8d-4e20-948d-58eda3cf7ae8" expectedErrorType="HTTP:TIMEOUT">
+			<munit:behavior>
+				<munit-tools:mock-when doc:name="Mock when HTTP:TIMEOUT" doc:id="5e8fcac6-76aa-4591-a1ab-d9ea66e9ad13" processor="mongo:collection-exists">
+					<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="MongoDB_Config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return>
+						<munit-tools:error typeId="HTTP:TIMEOUT" />
+					</munit-tools:then-return>
+				</munit-tools:mock-when>
+			</munit:behavior>
+			<munit:execution>
+				<flow-ref doc:name="Flow Reference to checkout-implFlow" doc:id="4b12d053-888b-443f-8016-69265be860ae" name="checkout-implFlow" />
+			</munit:execution>
+			<munit:validation>
+				<munit-tools:assert-equals doc:name="Assert equals" doc:id="b6afbf25-3072-47d6-a31b-a3c3f07e4636" actual="#[vars.httpStatus]" expected="#[500]" />
+			</munit:validation>
+		</munit:test>
+	<munit:test name="fakestore-checkout-sys-api-impl-triggerNotFoundinConsoleSuccess" doc:id="491d9a13-a203-46be-ae70-5f02b3c7f8c3" expectedErrorType="APIKIT:NOT_FOUND">
+			<munit:behavior>
+				<munit-tools:mock-when doc:name="Mock when APIKIT:NOT_FOUND" doc:id="0fc2d698-6f7d-498e-8ad8-62ed27ab53f5" processor="apikit:console">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="fakestore-checkout-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return>
+						<munit-tools:error typeId="APIKIT:NOT_FOUND" />
+					</munit-tools:then-return>
+				</munit-tools:mock-when>
+			</munit:behavior>
+			<munit:execution>
+				<flow-ref doc:name="Flow Reference to fakestore-checkout-sapi-console" doc:id="c96a25cb-c740-4e21-98bc-e39cda7e46da" name="fakestore-checkout-sapi-console" />
+			</munit:execution>
+			<munit:validation>
+				<munit-tools:assert-equals doc:name="Assert equals" doc:id="edc3053a-fce9-47ae-89ee-360564bcf016" actual="#[vars.httpStatus]" expected="#[404]" />
+			</munit:validation>
+		</munit:test>
+	<munit:test name="fakestore-checkout-sys-api-impl-triggerAnyErrorSuccess" doc:id="89e1ee4b-41e4-41a4-aef7-4181b142e062" expectedErrorType="ANY">
+			<munit:behavior>
+				<munit-tools:mock-when doc:name="Mock when ANY" doc:id="b25d4516-3889-4a53-86ee-651d87f6ebc8" processor="mongo:collection-exists">
+					<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="MongoDB_Config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return>
+						<munit-tools:error typeId="ANY" />
+					</munit-tools:then-return>
+				</munit-tools:mock-when>
+			</munit:behavior>
+			<munit:execution>
+				<flow-ref doc:name="Flow Reference to getAllProducts-implFlow" doc:id="536f8349-2126-4db9-b511-d13c6ed07436" name="checkout-implFlow" />
+			</munit:execution>
+			<munit:validation>
+				<munit-tools:assert-equals doc:name="Assert equals" doc:id="c9ff6984-e0d8-4831-8dc0-899559737601" actual="#[error.errorType.identifier]" expected='#["ANY"]' />
+			</munit:validation>
+		</munit:test>
 
 </mule>
