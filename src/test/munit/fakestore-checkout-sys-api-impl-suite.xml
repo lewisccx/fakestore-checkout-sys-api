@@ -22,24 +22,24 @@
 					</munit-tools:variables>
 				</munit-tools:then-return>
 			</munit-tools:mock-when>
-			<munit:set-event doc:name="Set Input" doc:id="65c83455-2b4e-49c1-9fac-b35f81ae5485" >
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Input" doc:id="65c83455-2b4e-49c1-9fac-b35f81ae5485">
 				<munit:payload value="#[output application/json --- readUrl('classpath://checkoutimplFlowinsertOrder\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
 				<munit:attributes value="#[readUrl('classpath://checkoutimplFlowinsertOrder\set-event_attributes.dwl')]" />
-				<munit:variables >
+				<munit:variables>
 					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://checkoutimplFlowinsertOrder\set-event_variable_.dwl')]" />
 				</munit:variables>
 			</munit:set-event>
-		</munit:behavior>
-		<munit:execution >
 			<flow-ref doc:name="Flow-ref to checkout-implFlow" doc:id="68d19cd4-5ecd-4c07-ba11-32b3a03886c3" name="checkout-implFlow"/>
 		</munit:execution>
 		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="bc4d0922-4546-4466-b699-8fcac2fa2dc8" expression="#[payload.title]" is='#[MunitTools::equalTo("item1, item2, item3")]' />
 			<munit-tools:verify-call doc:name="Verify order" doc:id="76c27d7d-7616-4eb0-985d-99f8274471f2" processor="ee:transform" times="1">
 				<munit-tools:with-attributes>
 					<munit-tools:with-attribute whereValue="f810bca0-2fb5-4e1d-8352-79e252cfec89" attributeName="doc:id" />
 				</munit-tools:with-attributes>
 			</munit-tools:verify-call>
-			<munit-tools:assert-that doc:name="Assert that" doc:id="bc4d0922-4546-4466-b699-8fcac2fa2dc8" expression="#[payload.title]" is='#[MunitTools::equalTo("item1, item2, item3")]'/>
 		</munit:validation>
 	</munit:test>
 	<munit:test name="checkout-implFlow-createOrderCollectionAndInsert" doc:id="651dc150-4f4e-4747-8426-e307357da49d" >
@@ -80,24 +80,24 @@
 					</munit-tools:variables>
 				</munit-tools:then-return>
 			</munit-tools:mock-when>
-			<munit:set-event doc:name="Set Input" doc:id="efe04686-ee3b-4703-b8c1-ae94771e6164" >
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Input" doc:id="efe04686-ee3b-4703-b8c1-ae94771e6164">
 				<munit:payload value="#[output application/json --- readUrl('classpath://checkoutimplFlowcreateOrderCollectionAndInsert\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
 				<munit:attributes value="#[readUrl('classpath://checkoutimplFlowcreateOrderCollectionAndInsert\set-event_attributes.dwl')]" />
-				<munit:variables >
+				<munit:variables>
 					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://checkoutimplFlowcreateOrderCollectionAndInsert\set-event_variable_.dwl')]" />
 				</munit:variables>
 			</munit:set-event>
-		</munit:behavior>
-		<munit:execution >
 			<flow-ref doc:name="Flow-ref to checkout-implFlow" doc:id="edb0888b-debc-40bf-8851-9208a7e131ca" name="checkout-implFlow"/>
 		</munit:execution>
 		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="7305507d-8a9e-4909-8937-2a262e8e8a30" expression="#[payload.title]" is='#[MunitTools::equalTo("item1, item2, item3")]' />
 			<munit-tools:verify-call doc:name="Verify order" doc:id="b0ceb1fe-f5b6-40d6-95a1-258be367a67b" processor="ee:transform" times="1">
 				<munit-tools:with-attributes>
 					<munit-tools:with-attribute whereValue="f810bca0-2fb5-4e1d-8352-79e252cfec89" attributeName="doc:id" />
 				</munit-tools:with-attributes>
 			</munit-tools:verify-call>
-			<munit-tools:assert-that doc:name="Assert that" doc:id="7305507d-8a9e-4909-8937-2a262e8e8a30" expression="#[payload.title]" is='#[MunitTools::equalTo("item1, item2, item3")]'/>
 		</munit:validation>
 	</munit:test>
 	<munit:test name="checkout-implFlow-mongoTimeout" doc:id="9bfbd1ac-07ed-40cf-a974-41e4c80e6426" >
@@ -116,15 +116,15 @@
 				</munit-tools:then-return>
 			
 </munit-tools:mock-when>
-			<munit:set-event doc:name="Set Input" doc:id="02af7042-4a30-4589-8843-f94d3b87d12b" >
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Input" doc:id="02af7042-4a30-4589-8843-f94d3b87d12b">
 				<munit:payload value="#[output application/json --- readUrl('classpath://checkoutimplFlowinsertOrder\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
 				<munit:attributes value="#[readUrl('classpath://checkoutimplFlowinsertOrder\set-event_attributes.dwl')]" />
-				<munit:variables >
+				<munit:variables>
 					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://checkoutimplFlowinsertOrder\set-event_variable_.dwl')]" />
 				</munit:variables>
 			</munit:set-event>
-		</munit:behavior>
-		<munit:execution >
 			<try doc:name="Try" doc:id="c2be1b7a-4acd-4595-a654-40c6a354fd54" >
 				<flow-ref doc:name="Flow-ref to checkout-implFlow" doc:id="447aede4-ca77-4582-9200-a06b5218edf4" name="checkout-implFlow" />
 				<error-handler >
@@ -193,24 +193,6 @@
 			</munit:execution>
 			<munit:validation>
 				<munit-tools:assert-equals doc:name="Assert equals" doc:id="70025c88-e7cb-4bb1-b472-47a65dd24143" actual="#[vars.httpStatus]" expected="#[404]" />
-			</munit:validation>
-		</munit:test>
-	<munit:test name="fakestore-checkout-sys-api-impl-triggerMethodNotAllowedSuccess" doc:id="a068fa2c-9378-420f-bb36-bb6944684bf6" expectedErrorType="APIKIT:METHOD_NOT_ALLOWED">
-			<munit:behavior>
-				<munit-tools:mock-when doc:name="Mock when APIKIT:METHOD_NOT_ALLOWED" doc:id="d5d82fa8-2058-4648-8393-4ada50efbf30" processor="apikit:router">
-					<munit-tools:with-attributes>
-						<munit-tools:with-attribute whereValue="fakestore-checkout-sapi-config" attributeName="config-ref" />
-					</munit-tools:with-attributes>
-				<munit-tools:then-return >
-					<munit-tools:error typeId="APIKIT:METHOD_NOT_ALLOWED" />
-				</munit-tools:then-return>
-				</munit-tools:mock-when>
-			</munit:behavior>
-			<munit:execution>
-				<flow-ref doc:name="Flow Reference to fakestore-checkout-sapi-main" doc:id="da5ac6f7-4fe3-4ee0-ae31-37417e598fed" name="fakestore-checkout-sapi-main" />
-			</munit:execution>
-			<munit:validation>
-				<munit-tools:assert-equals doc:name="Assert equals" doc:id="2af33753-4277-48eb-adc1-99ef86900804" actual="#[vars.httpStatus]" expected="#[405]" />
 			</munit:validation>
 		</munit:test>
 	<munit:test name="fakestore-checkout-sys-api-impl-triggerNotAcceptableSuccess" doc:id="83496216-5015-440a-9396-1102af39f5b0" expectedErrorType="APIKIT:NOT_ACCEPTABLE">
@@ -301,6 +283,53 @@
 			</munit:execution>
 			<munit:validation>
 				<munit-tools:assert-equals doc:name="Assert equals" doc:id="c9ff6984-e0d8-4831-8dc0-899559737601" actual="#[error.errorType.identifier]" expected='#["ANY"]' />
+			</munit:validation>
+		</munit:test>
+	<munit:test name="fakestore-checkout-sys-api-impl-triggerMethodNotAllowedSuccess" doc:id="a068fa2c-9378-420f-bb36-bb6944684bf6" expectedErrorType="APIKIT:METHOD_NOT_ALLOWED">
+			<munit:behavior>
+				<munit-tools:mock-when doc:name="Mock when APIKIT:METHOD_NOT_ALLOWED" doc:id="d5d82fa8-2058-4648-8393-4ada50efbf30" processor="apikit:router">
+					<munit-tools:with-attributes>
+						<munit-tools:with-attribute whereValue="fakestore-checkout-sapi-config" attributeName="config-ref" />
+					</munit-tools:with-attributes>
+				<munit-tools:then-return>
+					<munit-tools:error typeId="APIKIT:METHOD_NOT_ALLOWED" />
+				</munit-tools:then-return>
+				</munit-tools:mock-when>
+			</munit:behavior>
+			<munit:execution>
+				<flow-ref doc:name="Flow Reference to fakestore-checkout-sapi-main" doc:id="da5ac6f7-4fe3-4ee0-ae31-37417e598fed" name="fakestore-checkout-sapi-main" />
+			</munit:execution>
+			<munit:validation>
+				<munit-tools:assert-equals doc:name="Assert equals" doc:id="2af33753-4277-48eb-adc1-99ef86900804" actual="#[vars.httpStatus]" expected="#[405]" />
+			</munit:validation>
+		</munit:test>
+	<munit:test name="post:\checkout:application\json:fakestore-checkout-sapi-config-success" doc:id="3a1ab10d-e94c-42bb-b0a5-f8dc28a22baf">
+			<munit:behavior>
+				<munit-tools:mock-when doc:name="Mock checkout" doc:id="213c9fc3-1243-41c7-9631-27a4adcb83bb" processor="flow-ref">
+					<munit-tools:with-attributes>
+						<munit-tools:with-attribute whereValue="afb0458d-943e-40ea-8601-97e30e84aa89" attributeName="doc:id" />
+					</munit-tools:with-attributes>
+					<munit-tools:then-return>
+						<munit-tools:payload value="#[output application/json --- readUrl('classpath://postcheckoutapplicationjsonfakestorecheckoutsapiconfigsuccess\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+						<munit-tools:variables>
+							<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://postcheckoutapplicationjsonfakestorecheckoutsapiconfigsuccess\mock_variable_.dwl')]" />
+							<munit-tools:variable key="order" value="#[output application/json --- readUrl('classpath://postcheckoutapplicationjsonfakestorecheckoutsapiconfigsuccess\mock_variable_1.dwl')]" mediaType="application/json" encoding="UTF-8" />
+						</munit-tools:variables>
+					</munit-tools:then-return>
+				</munit-tools:mock-when>
+			</munit:behavior>
+			<munit:execution>
+				<munit:set-event doc:name="Set Input" doc:id="7258d20d-6864-495c-9dd0-12cf925618a7">
+					<munit:payload value="#[output application/json --- readUrl('classpath://postcheckoutapplicationjsonfakestorecheckoutsapiconfigsuccess\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+					<munit:attributes value="#[readUrl('classpath://postcheckoutapplicationjsonfakestorecheckoutsapiconfigsuccess\set-event_attributes.dwl')]" />
+					<munit:variables>
+						<munit:variable key="outboundHeaders" value="#[readUrl('classpath://postcheckoutapplicationjsonfakestorecheckoutsapiconfigsuccess\set-event_variable_.dwl')]" />
+					</munit:variables>
+				</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\checkout:application\json:fakestore-checkout-sapi-config" doc:id="3e34f1e6-2a4a-4457-b39f-e4417c01e840" name="post:\checkout:application\json:fakestore-checkout-sapi-config" />
+			</munit:execution>
+			<munit:validation>
+				<munit-tools:assert-equals doc:name="Assert equals" doc:id="5b97b3d0-815f-4a60-a519-95cc42fbe14e" actual="#[payload.title]" expected='#["item1, item2, item3"]' message='The payload title should be "item1, item2, item3"' />
 			</munit:validation>
 		</munit:test>
 
