@@ -35,8 +35,8 @@ http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/m
 	</mongo:config>
 	<configuration doc:name="Configuration" doc:id="c09eafeb-759e-4dc9-bf5a-44aed132b4ba" defaultErrorHandler-ref="globalError_Handler" />
 	<api-gateway:autodiscovery apiId="${app.appId}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="406abcd0-4d1a-472a-a690-905b95eb5e6a" flowRef="fakestore-checkout-sapi-main" />
-	<global-property doc:name="Global Property" doc:id="5edba34a-e394-4822-a280-04204a124ec4" name="mule.env" value="dev" />
-	<global-property doc:name="Global Property" doc:id="db54c923-794c-4e28-ae4e-110bc1dc9425" name="mule.key" value="viseo" />
+	<global-property doc:name="Global Property" doc:id="19705416-77f8-490e-be91-e72e08be66a2" name="mule.env" value="dev" />
+	<global-property doc:name="Global Property" doc:id="8a5f2b2f-3d8e-4100-bcdf-fa12a286e642" name="mule.key" value="viseo" />
 	<error-handler name="globalError_Handler" doc:id="57c9bf09-2f0f-4f10-a733-37d6f7e9727d" >
 		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="ffccc898-549e-4ea8-be9a-d9674a566af7" type="MONGO:TIMEOUT">
 			<ee:transform doc:name="MONGO:TIMEOUT" doc:id="bfdf37ac-2110-4d9e-8a47-039804c1348e" >
@@ -47,7 +47,7 @@ output application/json
 {
 	"header":{
 		"apiName": p('app.name'),
-		"apiVersion": 
+		"apiVersion":  p('version'),
 		"correlationId": correlationId,
     }, 
     "error": {
@@ -68,7 +68,7 @@ output application/json
 {
 	"header":{
 		"apiName": p('app.name'),
-		"apiVersion": 
+		"apiVersion": p('version'),
 		"correlationId": correlationId,
     }, 
     "error": {
