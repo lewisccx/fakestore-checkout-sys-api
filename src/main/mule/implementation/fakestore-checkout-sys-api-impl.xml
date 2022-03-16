@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:mongo="http://www.mulesoft.org/schema/mule/mongo" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
-	xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:batch="http://www.mulesoft.org/schema/mule/batch"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:mongo="http://www.mulesoft.org/schema/mule/mongo" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
-http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mongo/current/mule-mongo.xsd">
+http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mongo/current/mule-mongo.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<global-property doc:name="Global Property" doc:id="d653f42c-d7ee-4cbd-97a1-18af3b88d7e5" name="mule.env" value="dev" />
+	<global-property doc:name="Global Property" doc:id="6f2a7df5-53f7-434e-84de-0fb60682da52" name="mule.key" value="viseo" />
 	<flow name="checkout-implFlow" doc:id="14478144-fe68-467e-8b5c-d2bda006bf41" >
 		<logger level="INFO" doc:name="Start storing order into mongo database" doc:id="c45f08ae-05c4-4381-9ef0-f1218e107442" />
 		<set-variable value="#[payload]" doc:name="Set order payload" doc:id="4783c01b-1730-4e8d-a89d-8f8790110c4b" variableName="order" />
-		<mongo:collection-exists doc:name="Check if Collection 'order' exists" doc:id="75efcfe7-ef82-4602-9baf-4a4e8226c251" config-ref="MongoDB_Config" collectionName="order"/>
+		<mongo:collection-exists doc:name="Check if Collection 'order' exists" doc:id="75efcfe7-ef82-4602-9baf-4a4e8226c251" config-ref="MongoDB_Config" collectionName="order" />
 		<choice doc:name="Choice" doc:id="f5fbb7e7-0c84-4169-be4c-d2200beb6bf9" >
 			<when expression="#[payload == true]">
 				<mongo:insert-document collectionName="order" doc:name="if Collection 'order' exists, Insert order object" doc:id="f1e536fd-f975-4550-a301-3b0eae1eef36" config-ref="MongoDB_Config">
@@ -33,5 +39,60 @@ payload]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<logger level="INFO" doc:name="End of storing order into mongo database" doc:id="542ef0c7-e0a1-451a-ba8b-e3e8ab0c50ce" message="End of storing order into mongo database"/>
+	</flow>
+	<flow name="fakestore-checkout-sys-api-testAsyncFlow" doc:id="de020894-ec84-4950-8250-a7128c099bfc" >
+		<http:listener doc:name="Listener" doc:id="d6161476-1f56-4338-b575-f3983337de13" config-ref="fakestore-checkout-sapi-httpListenerConfig" path="/asynctest"/>
+		<set-variable value="#[payload]" doc:name="Set order payload" doc:id="4804e7dc-3456-4686-b303-8204dd8d1e14" variableName="order" />
+		<mongo:collection-exists collectionName="order" doc:name="Check if Collection 'order' exists" doc:id="28603b3e-6f42-4bf4-bed1-979f45b1b2d2" config-ref="MongoDB_Config" />
+		<async doc:name="Async" doc:id="47396ad4-c26b-4144-a232-bac04eb37a96" >
+			<choice doc:name="Choice" doc:id="b6f492b0-75dd-442a-9b17-ec8899168197" >
+				<when expression="#[payload == true]" >
+					<mongo:insert-document collectionName="order" doc:name="if Collection 'order' exists, Insert order object" doc:id="a609c4eb-ff8e-48e3-8a38-4751adb87aa2" config-ref="MongoDB_Config" >
+						<mongo:document ><![CDATA[#[vars.order]]]></mongo:document>
+					</mongo:insert-document>
+					<logger level="INFO" doc:name="Order has been inserted into order collection" doc:id="e8ddef88-2764-4ea2-aeab-eb6a5ca8fd85" message="Order has been inserted into order collection" />
+				</when>
+				<otherwise >
+					<mongo:create-collection doc:name="Create order collection" doc:id="8450fd03-0490-4fbd-87ac-4db8fdf31ffc" config-ref="MongoDB_Config" collectionName="order" />
+					<mongo:insert-document collectionName="order" doc:name="Insert order object" doc:id="9ba6d815-d6ee-4abc-bdc6-3c57f628ac19" config-ref="MongoDB_Config" >
+						<mongo:document ><![CDATA[#[vars.order]]]></mongo:document>
+					</mongo:insert-document>
+					<logger level="INFO" doc:name="Order collection created, Order has been inserted into order collection" doc:id="cd3969f4-b911-4b97-86fb-06abc3ed89f4" message="Order collection created, Order has been inserted into order collection" />
+				</otherwise>
+			</choice>
+		</async>
+		<ee:transform doc:name="order" doc:id="120645e4-0f85-4db0-988c-b3d5cee513a4" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="End of storing order into mongo database" doc:id="72c695c4-6b20-4781-b4cc-5862ec6fd5d4" message="End of storing order into mongo database" />
+	</flow>
+	<flow name="fakestore-checkout-sys-api-testBatchProcessingScheduler" doc:id="a83a2238-1b5a-4d28-8c4c-70753ef0d513" >
+		<scheduler doc:name="Scheduler" doc:id="e6c437ff-34b9-43c8-8d7f-ff9a2d8fc0fa" >
+			<scheduling-strategy >
+				<fixed-frequency frequency="5000"/>
+			</scheduling-strategy>
+		</scheduler>
+		<db:select doc:name="Select" doc:id="97aaab45-8a5b-4591-afc8-946c016b1018" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from employees]]></db:sql>
+		</db:select>
+		<batch:job jobName="fakestore-checkout-sys-api-implBatch_Job" doc:id="14360feb-c2ac-4d6e-aef2-c3dd54d79798" blockSize="5">
+			<batch:process-records >
+				<batch:step name="Batch_Step" doc:id="3143a8b4-7500-4f9a-832b-e9debf2c7dc3" >
+					<ee:transform doc:name="Transform Message" doc:id="37be6b73-4186-410b-be4c-61ac5e095f49" >
+						<ee:message >
+							<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+				</batch:step>
+			</batch:process-records>
+		</batch:job>
 	</flow>
 </mule>

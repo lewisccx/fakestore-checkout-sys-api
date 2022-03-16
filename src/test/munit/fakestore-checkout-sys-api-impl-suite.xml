@@ -8,6 +8,17 @@
 		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
 		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
 	<munit:config name="fakestore-checkout-sys-api-impl-suite.xml" />
+	<global-property doc:name="Global Property" doc:id="6ad74291-0778-475b-8d4f-2409f9f40828" name="mule.env" value="dev" />
+	<global-property doc:name="Global Property" doc:id="a790392b-0edd-4efc-a3c2-fd4e9c2c3677" name="mule.key" value="viseo" />
+	<munit:before-suite name="fakestore-checkout-sys-api-impl-suiteBefore_Suite" doc:id="998b571c-e1e8-4f59-95d0-2c0c2194b63f" >
+		<munit:set-event doc:name="Set Input" doc:id="65c83455-2b4e-49c1-9fac-b35f81ae5485">
+				<munit:payload value="#[output application/json --- readUrl('classpath://checkoutimplFlowinsertOrder\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+				<munit:attributes value="#[readUrl('classpath://checkoutimplFlowinsertOrder\set-event_attributes.dwl')]" />
+				<munit:variables>
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://checkoutimplFlowinsertOrder\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+	</munit:before-suite>
 	<munit:test name="checkout-implFlow-insertOrder" doc:id="0ccf4554-f55d-4f3e-949c-21a2c90913bd" >
 		<munit:behavior >
 			<munit-tools:mock-when doc:name="Mock Check if Collection 'order' exists" doc:id="50f87459-2e74-4c29-a579-a62b000a0701" processor="mongo:collection-exists">
@@ -24,13 +35,6 @@
 			</munit-tools:mock-when>
 		</munit:behavior>
 		<munit:execution >
-			<munit:set-event doc:name="Set Input" doc:id="65c83455-2b4e-49c1-9fac-b35f81ae5485">
-				<munit:payload value="#[output application/json --- readUrl('classpath://checkoutimplFlowinsertOrder\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
-				<munit:attributes value="#[readUrl('classpath://checkoutimplFlowinsertOrder\set-event_attributes.dwl')]" />
-				<munit:variables>
-					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://checkoutimplFlowinsertOrder\set-event_variable_.dwl')]" />
-				</munit:variables>
-			</munit:set-event>
 			<flow-ref doc:name="Flow-ref to checkout-implFlow" doc:id="68d19cd4-5ecd-4c07-ba11-32b3a03886c3" name="checkout-implFlow"/>
 		</munit:execution>
 		<munit:validation >
@@ -42,7 +46,7 @@
 			</munit-tools:verify-call>
 		</munit:validation>
 	</munit:test>
-	<munit:test name="checkout-implFlow-createOrderCollectionAndInsert" doc:id="651dc150-4f4e-4747-8426-e307357da49d" >
+	<munit:test name="checkout-implFlow-createOrderCollectionAndInsert" doc:id="651dc150-4f4e-4747-8426-e307357da49d" tags="test">
 		<munit:behavior >
 			<munit-tools:mock-when doc:name="Mock Insert order object" doc:id="cb534f4a-3cae-44c4-991a-e157d4c7d5a8" processor="mongo:insert-document">
 				<munit-tools:with-attributes >
@@ -332,5 +336,80 @@
 				<munit-tools:assert-equals doc:name="Assert equals" doc:id="5b97b3d0-815f-4a60-a519-95cc42fbe14e" actual="#[payload.title]" expected='#["item1, item2, item3"]' message='The payload title should be "item1, item2, item3"' />
 			</munit:validation>
 		</munit:test>
+	<munit:test name="checkout-implFlow-test-demo" doc:id="a86706fc-0878-4092-8eba-f70685f69b22" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock if Collection 'order' exists, Insert order object" doc:id="801637e8-7684-4779-873d-52c31bec69ed" processor="mongo:insert-document">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="f1e536fd-f975-4550-a301-3b0eae1eef36" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://checkoutimplFlowtestdemo\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://checkoutimplFlowtestdemo\mock_variable_.dwl')]" />
+						<munit-tools:variable key="order" value="#[output application/json --- readUrl('classpath://checkoutimplFlowtestdemo\mock_variable_1.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit-tools:mock-when doc:name="Mock Check if Collection 'order' exists" doc:id="7b6ca60b-f288-4dbe-807a-8205d9878341" processor="mongo:collection-exists">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="75efcfe7-ef82-4602-9baf-4a4e8226c251" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/java --- readUrl('classpath://checkoutimplFlowtestdemo\mock_payload1.dwl')]" mediaType="application/java" encoding="UTF-8" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://checkoutimplFlowtestdemo\mock_variable_2.dwl')]" />
+						<munit-tools:variable key="order" value="#[output application/json --- readUrl('classpath://checkoutimplFlowtestdemo\mock_variable_3.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit-tools:mock-when doc:name="Mock Set order payload" doc:id="4a150b45-8f67-4bd9-87be-d1f0ad57b746" processor="set-variable">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="4783c01b-1730-4e8d-a89d-8f8790110c4b" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://checkoutimplFlowtestdemo\mock_variable_4.dwl')]" />
+						<munit-tools:variable key="order" value="#[output application/json --- readUrl('classpath://checkoutimplFlowtestdemo\mock_variable_5.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="1bf60c40-5a4e-448d-aa34-cda7c78ac1c5" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://checkoutimplFlowtestdemo\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+				<munit:attributes value="#[readUrl('classpath://checkoutimplFlowtestdemo\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://checkoutimplFlowtestdemo\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to checkout-implFlow" doc:id="333f39f0-3f99-4eed-a625-810fa509af05" name="checkout-implFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="311eb894-4dd3-4e92-9351-66808fe0e549" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import checkoutimplFlowtestdemo::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="fakestore-checkout-sys-api-testBatchProcessingScheduler-test" doc:id="6f6e7144-ae80-4a48-9609-a8869a3cffbd" >
+		<munit:behavior >
+			<munit:set-event doc:name="Set Input" doc:id="250d10b6-11ff-4ded-893d-184073522c2b" >
+				<munit:payload value="#[readUrl('classpath://fakestorecheckoutsysapitestBatchProcessingSchedulertest\set-event_payload.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to fakestore-checkout-sys-api-testBatchProcessingScheduler" doc:id="a20a4d1c-b35a-4edc-b22f-fdb40b625231" name="fakestore-checkout-sys-api-testBatchProcessingScheduler"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="22f90cc0-6580-43c2-b98a-fe4de07c4244" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import fakestorecheckoutsysapitestBatchProcessingSchedulertest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
 
 </mule>
