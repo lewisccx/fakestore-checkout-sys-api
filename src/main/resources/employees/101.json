@@ -1,0 +1,12 @@
+{
+  "manager_id": 100,
+  "department_id": 9,
+  "job_id": 5,
+  "employee_id": 101,
+  "last_name": "Kochhar",
+  "phone_number": "515.123.4568",
+  "hire_date": "1989-09-21T00:00:00",
+  "salary": 17000.00,
+  "first_name": "Neena",
+  "email": "neena.kochhar@sqltutorial.org"
+}

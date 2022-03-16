@@ -1,0 +1,12 @@
+{
+  "manager_id": 100,
+  "department_id": 8,
+  "job_id": 16,
+  "employee_id": 177,
+  "last_name": "Livingston",
+  "phone_number": null,
+  "hire_date": "1998-04-23T00:00:00",
+  "salary": 8400.00,
+  "first_name": "Jack",
+  "email": "jack.livingston@sqltutorial.org"
+}

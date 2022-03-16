@@ -1,0 +1,12 @@
+{
+  "manager_id": 100,
+  "department_id": 9,
+  "job_id": 5,
+  "employee_id": 102,
+  "last_name": "De Haan",
+  "phone_number": "515.123.4569",
+  "hire_date": "1993-01-13T00:00:00",
+  "salary": 17000.00,
+  "first_name": "Lex",
+  "email": "lex.de haan@sqltutorial.org"
+}

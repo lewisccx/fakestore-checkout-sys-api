@@ -1,0 +1,12 @@
+{
+  "manager_id": 100,
+  "department_id": 2,
+  "job_id": 10,
+  "employee_id": 201,
+  "last_name": "Hartstein",
+  "phone_number": "515.123.5555",
+  "hire_date": "1996-02-17T00:00:00",
+  "salary": 13000.00,
+  "first_name": "Michael",
+  "email": "michael.hartstein@sqltutorial.org"
+}

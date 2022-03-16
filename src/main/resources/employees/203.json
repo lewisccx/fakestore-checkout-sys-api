@@ -1,0 +1,12 @@
+{
+  "manager_id": 101,
+  "department_id": 4,
+  "job_id": 8,
+  "employee_id": 203,
+  "last_name": "Mavris",
+  "phone_number": "515.123.7777",
+  "hire_date": "1994-06-07T00:00:00",
+  "salary": 6500.00,
+  "first_name": "Susan",
+  "email": "susan.mavris@sqltutorial.org"
+}

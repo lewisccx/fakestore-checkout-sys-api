@@ -1,0 +1,12 @@
+{
+  "manager_id": 108,
+  "department_id": 10,
+  "job_id": 6,
+  "employee_id": 113,
+  "last_name": "Popp",
+  "phone_number": "515.124.4567",
+  "hire_date": "1999-12-07T00:00:00",
+  "salary": 6900.00,
+  "first_name": "Luis",
+  "email": "luis.popp@sqltutorial.org"
+}

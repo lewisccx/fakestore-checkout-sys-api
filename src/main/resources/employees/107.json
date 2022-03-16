@@ -1,0 +1,12 @@
+{
+  "manager_id": 103,
+  "department_id": 6,
+  "job_id": 9,
+  "employee_id": 107,
+  "last_name": "Lorentz",
+  "phone_number": "590.423.5567",
+  "hire_date": "1999-02-07T00:00:00",
+  "salary": 4200.00,
+  "first_name": "Diana",
+  "email": "diana.lorentz@sqltutorial.org"
+}

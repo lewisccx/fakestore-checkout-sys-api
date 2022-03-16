@@ -1,0 +1,12 @@
+{
+  "department_id": 3,
+  "manager_id": 114,
+  "job_id": 13,
+  "employee_id": 118,
+  "last_name": "Himuro",
+  "phone_number": "515.127.4565",
+  "hire_date": "1998-11-15T00:00:00",
+  "salary": 2600.00,
+  "first_name": "Guy",
+  "email": "guy.himuro@sqltutorial.org"
+}

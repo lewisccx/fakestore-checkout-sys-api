@@ -1,0 +1,12 @@
+{
+  "department_id": 3,
+  "manager_id": 114,
+  "job_id": 13,
+  "employee_id": 115,
+  "last_name": "Khoo",
+  "phone_number": "515.127.4562",
+  "hire_date": "1995-05-18T00:00:00",
+  "salary": 3100.00,
+  "first_name": "Alexander",
+  "email": "alexander.khoo@sqltutorial.org"
+}

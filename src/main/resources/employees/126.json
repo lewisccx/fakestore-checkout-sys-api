@@ -1,0 +1,12 @@
+{
+  "department_id": 5,
+  "manager_id": 120,
+  "job_id": 18,
+  "employee_id": 126,
+  "last_name": "Mikkilineni",
+  "phone_number": "650.124.1224",
+  "hire_date": "1998-09-28T00:00:00",
+  "salary": 2700.00,
+  "first_name": "Irene",
+  "email": "irene.mikkilineni@sqltutorial.org"
+}

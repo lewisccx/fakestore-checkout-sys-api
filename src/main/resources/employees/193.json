@@ -1,0 +1,12 @@
+{
+  "department_id": 5,
+  "manager_id": 123,
+  "job_id": 17,
+  "employee_id": 193,
+  "last_name": "Everett",
+  "phone_number": "650.501.2876",
+  "hire_date": "1997-03-03T00:00:00",
+  "salary": 3900.00,
+  "first_name": "Britney",
+  "email": "britney.everett@sqltutorial.org"
+}

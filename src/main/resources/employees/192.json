@@ -1,0 +1,12 @@
+{
+  "department_id": 5,
+  "manager_id": 123,
+  "job_id": 17,
+  "employee_id": 192,
+  "last_name": "Bell",
+  "phone_number": "650.501.1876",
+  "hire_date": "1996-02-04T00:00:00",
+  "salary": 4000.00,
+  "first_name": "Sarah",
+  "email": "sarah.bell@sqltutorial.org"
+}

@@ -1,0 +1,12 @@
+{
+  "manager_id": null,
+  "department_id": 9,
+  "job_id": 4,
+  "employee_id": 100,
+  "last_name": "King",
+  "phone_number": "515.123.4567",
+  "hire_date": "1987-06-17T00:00:00",
+  "salary": 24000.00,
+  "first_name": "Steven",
+  "email": "steven.king@sqltutorial.org"
+}

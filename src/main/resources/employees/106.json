@@ -1,0 +1,12 @@
+{
+  "manager_id": 103,
+  "department_id": 6,
+  "job_id": 9,
+  "employee_id": 106,
+  "last_name": "Pataballa",
+  "phone_number": "590.423.4560",
+  "hire_date": "1998-02-05T00:00:00",
+  "salary": 4800.00,
+  "first_name": "Valli",
+  "email": "valli.pataballa@sqltutorial.org"
+}

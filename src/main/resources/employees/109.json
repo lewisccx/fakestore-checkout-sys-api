@@ -1,0 +1,12 @@
+{
+  "manager_id": 108,
+  "department_id": 10,
+  "job_id": 6,
+  "employee_id": 109,
+  "last_name": "Faviet",
+  "phone_number": "515.124.4169",
+  "hire_date": "1994-08-16T00:00:00",
+  "salary": 9000.00,
+  "first_name": "Daniel",
+  "email": "daniel.faviet@sqltutorial.org"
+}
