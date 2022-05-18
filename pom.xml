@@ -40,6 +40,7 @@
 						<applicationName>${runtime.appname}</applicationName>
 						<workerType>${runtime.vCore}</workerType>
 						<workers>${runtime.workers}</workers>
+						<region>${runtime.region}</region>
 						<objectStoreV2>true</objectStoreV2>
 					</cloudHubDeployment>
 					<sharedLibraries>
