@@ -8,6 +8,17 @@
 		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
 		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
 	<munit:config name="fakestore-checkout-sys-api-impl-suite.xml" />
+	<global-property doc:name="Global Property" doc:id="6ad74291-0778-475b-8d4f-2409f9f40828" name="mule.env" value="dev" />
+	<global-property doc:name="Global Property" doc:id="a790392b-0edd-4efc-a3c2-fd4e9c2c3677" name="mule.key" value="viseo" />
+	<munit:before-suite name="fakestore-checkout-sys-api-impl-suiteBefore_Suite" doc:id="998b571c-e1e8-4f59-95d0-2c0c2194b63f" >
+		<munit:set-event doc:name="Set Input" doc:id="65c83455-2b4e-49c1-9fac-b35f81ae5485">
+				<munit:payload value="#[output application/json --- readUrl('classpath://checkoutimplFlowinsertOrder\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+				<munit:attributes value="#[readUrl('classpath://checkoutimplFlowinsertOrder\set-event_attributes.dwl')]" />
+				<munit:variables>
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://checkoutimplFlowinsertOrder\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+	</munit:before-suite>
 	<munit:test name="checkout-implFlow-insertOrder" doc:id="0ccf4554-f55d-4f3e-949c-21a2c90913bd" >
 		<munit:behavior >
 			<munit-tools:mock-when doc:name="Mock Check if Collection 'order' exists" doc:id="50f87459-2e74-4c29-a579-a62b000a0701" processor="mongo:collection-exists">
@@ -24,13 +35,6 @@
 			</munit-tools:mock-when>
 		</munit:behavior>
 		<munit:execution >
-			<munit:set-event doc:name="Set Input" doc:id="65c83455-2b4e-49c1-9fac-b35f81ae5485">
-				<munit:payload value="#[output application/json --- readUrl('classpath://checkoutimplFlowinsertOrder\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
-				<munit:attributes value="#[readUrl('classpath://checkoutimplFlowinsertOrder\set-event_attributes.dwl')]" />
-				<munit:variables>
-					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://checkoutimplFlowinsertOrder\set-event_variable_.dwl')]" />
-				</munit:variables>
-			</munit:set-event>
 			<flow-ref doc:name="Flow-ref to checkout-implFlow" doc:id="68d19cd4-5ecd-4c07-ba11-32b3a03886c3" name="checkout-implFlow"/>
 		</munit:execution>
 		<munit:validation >
@@ -42,7 +46,7 @@
 			</munit-tools:verify-call>
 		</munit:validation>
 	</munit:test>
-	<munit:test name="checkout-implFlow-createOrderCollectionAndInsert" doc:id="651dc150-4f4e-4747-8426-e307357da49d" >
+	<munit:test name="checkout-implFlow-createOrderCollectionAndInsert" doc:id="651dc150-4f4e-4747-8426-e307357da49d" tags="test">
 		<munit:behavior >
 			<munit-tools:mock-when doc:name="Mock Insert order object" doc:id="cb534f4a-3cae-44c4-991a-e157d4c7d5a8" processor="mongo:insert-document">
 				<munit-tools:with-attributes >

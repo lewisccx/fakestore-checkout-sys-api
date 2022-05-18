@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:mongo="http://www.mulesoft.org/schema/mule/mongo" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
-	xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:batch="http://www.mulesoft.org/schema/mule/batch"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:mongo="http://www.mulesoft.org/schema/mule/mongo" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
-http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mongo/current/mule-mongo.xsd">
+http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mongo/current/mule-mongo.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<global-property doc:name="Global Property" doc:id="d653f42c-d7ee-4cbd-97a1-18af3b88d7e5" name="mule.env" value="dev" />
+	<global-property doc:name="Global Property" doc:id="6f2a7df5-53f7-434e-84de-0fb60682da52" name="mule.key" value="viseo" />
 	<flow name="checkout-implFlow" doc:id="14478144-fe68-467e-8b5c-d2bda006bf41" >
 		<logger level="INFO" doc:name="Start storing order into mongo database" doc:id="c45f08ae-05c4-4381-9ef0-f1218e107442" />
 		<set-variable value="#[payload]" doc:name="Set order payload" doc:id="4783c01b-1730-4e8d-a89d-8f8790110c4b" variableName="order" />
-		<mongo:collection-exists doc:name="Check if Collection 'order' exists" doc:id="75efcfe7-ef82-4602-9baf-4a4e8226c251" config-ref="MongoDB_Config" collectionName="order"/>
+		<mongo:collection-exists doc:name="Check if Collection 'order' exists" doc:id="75efcfe7-ef82-4602-9baf-4a4e8226c251" config-ref="MongoDB_Config" collectionName="order" />
 		<choice doc:name="Choice" doc:id="f5fbb7e7-0c84-4169-be4c-d2200beb6bf9" >
 			<when expression="#[payload == true]">
 				<mongo:insert-document collectionName="order" doc:name="if Collection 'order' exists, Insert order object" doc:id="f1e536fd-f975-4550-a301-3b0eae1eef36" config-ref="MongoDB_Config">

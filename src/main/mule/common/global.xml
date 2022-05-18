@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
-	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
-	xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:mongo="http://www.mulesoft.org/schema/mule/mongo"
-	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
-	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+	xmlns:mongo="http://www.mulesoft.org/schema/mule/mongo" xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
 http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
 http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mongo/current/mule-mongo.xsd
 http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
-http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
 	
 	  <http:listener-config name="fakestore-checkout-sapi-httpListenerConfig">
         <http:listener-connection host="0.0.0.0" port="8081" />
@@ -35,8 +37,12 @@ http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/m
 	</mongo:config>
 	<configuration doc:name="Configuration" doc:id="c09eafeb-759e-4dc9-bf5a-44aed132b4ba" defaultErrorHandler-ref="globalError_Handler" />
 	<api-gateway:autodiscovery apiId="${app.appId}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="406abcd0-4d1a-472a-a690-905b95eb5e6a" flowRef="fakestore-checkout-sapi-main" />
-	<global-property doc:name="Global Property" doc:id="19705416-77f8-490e-be91-e72e08be66a2" name="mule.env" value="dev" />
-	<global-property doc:name="Global Property" doc:id="8a5f2b2f-3d8e-4100-bcdf-fa12a286e642" name="mule.key" value="viseo" />
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="61bb5368-2ce3-4d73-93c9-94fb79563518" >
+		<db:my-sql-connection host="localhost" port="3306" user="root" password="mysql" database="hr" />
+	</db:config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="9412e12c-0a22-4f5e-b895-ad2269d638cb" >
+		<file:connection workingDir="C:\Users\LewisCao\Documents\employees" />
+	</file:config>
 	<error-handler name="globalError_Handler" doc:id="57c9bf09-2f0f-4f10-a733-37d6f7e9727d" >
 		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="ffccc898-549e-4ea8-be9a-d9674a566af7" type="MONGO:TIMEOUT">
 			<ee:transform doc:name="MONGO:TIMEOUT" doc:id="bfdf37ac-2110-4d9e-8a47-039804c1348e" >
