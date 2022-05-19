@@ -1,6 +1,5 @@
 app:
   name: "Checkout System API"
-  appId: "17651019"
 http:
   port: "8081"
   timeout: "30000"
