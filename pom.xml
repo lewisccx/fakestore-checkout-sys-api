@@ -42,6 +42,10 @@
 						<workers>${runtime.workers}</workers>
 						<region>${runtime.region}</region>
 						<objectStoreV2>true</objectStoreV2>
+							<properties>
+								<mule.env>${runtime.env}</mule.env>
+								<mule.key>${runtime.key}</mule.key>
+							</properties>
 					</cloudHubDeployment>
 					<sharedLibraries>
 						<sharedLibrary>
