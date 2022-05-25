@@ -4,7 +4,7 @@
 
 	<groupId>com.mycompany</groupId>
 	<artifactId>fakestore-db-sapi-ccx</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0-RELEASE</version>
 	<packaging>mule-application</packaging>
 
 	<name>fakestore-checkout-sys-api</name>
