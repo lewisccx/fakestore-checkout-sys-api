@@ -16,6 +16,8 @@
 		<mule.maven.plugin.version>3.5.4</mule.maven.plugin.version>
 		<munit.version>2.3.7</munit.version>
 		<sonar.sources>src/</sonar.sources>
+		<sonar.projectKey>fakestore-checkout-sys-api</sonar.projectKey>
+		<sonar.exclusions>vendor/**, storage/**, resource/**. **/*.java</sonar.exclusions>
 	</properties>
 
 	<build>
