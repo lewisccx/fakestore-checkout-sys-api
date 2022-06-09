@@ -30,7 +30,7 @@ pipeline {
      
      stage("Nexus Repo"){
          steps {
-             nexusArtifactUploader artifacts: [[artifactId: 'fakestore-db-sapi-ccx', classifier: 'mule-application', file: 'C:/Users/LewisCao/AnypointStudio/studio-workspace/fakestore-checkout-sys-api/target/fakestore-db-sapi-ccx-1.0.0-SNAPSHOT-mule-application.jar', type: 'jar']], credentialsId: 'nexus-sonatype-credential', groupId: 'com.mycompany', nexusUrl: 'localhost:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'cancer-snapshots', version: '1.0.0-SNAPSHOT'
+             nexusArtifactUploader artifacts: [[artifactId: 'fakestore-db-sapi-ccx', classifier: 'mule-application', file: 'fakestore-checkout-sys-api/target/fakestore-db-sapi-ccx-1.0.0-SNAPSHOT-mule-application.jar', type: 'jar']], credentialsId: 'nexus-sonatype-credential', groupId: 'com.mycompany', nexusUrl: 'localhost:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'cancer-hosted-snapshot', version: '1.0.0-SNAPSHOT'
          }
      }
      stage("Deployment"){
