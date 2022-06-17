@@ -16,7 +16,7 @@ http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/cu
 http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
 	
 	  <http:listener-config name="fakestore-checkout-sapi-httpListenerConfig">
-        <http:listener-connection host="0.0.0.0" port="8081" />
+        <http:listener-connection host="0.0.0.0" port="${http.port}" />
     </http:listener-config>
     <apikit:config name="fakestore-checkout-sapi-config" api="resource::706f4d0a-e4a3-40fb-8365-ae5ac1f0a8d7:fakestore-checkout-sys-api:1.0.1:raml:zip:fakestore-checkout-sys-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
 	<configuration-properties doc:name="Configuration properties" doc:id="15c46c3a-f63a-4928-bc40-04b8bf853e4a" file="config/${mule.env}.yaml" />
@@ -36,13 +36,6 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
 		</mongo:connection>
 	</mongo:config>
 	<configuration doc:name="Configuration" doc:id="c09eafeb-759e-4dc9-bf5a-44aed132b4ba" defaultErrorHandler-ref="globalError_Handler" />
-	<api-gateway:autodiscovery apiId="${app.appId}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="406abcd0-4d1a-472a-a690-905b95eb5e6a" flowRef="fakestore-checkout-sapi-main" />
-	<db:config name="Database_Config" doc:name="Database Config" doc:id="61bb5368-2ce3-4d73-93c9-94fb79563518" >
-		<db:my-sql-connection host="localhost" port="3306" user="root" password="mysql" database="hr" />
-	</db:config>
-	<file:config name="File_Config" doc:name="File Config" doc:id="9412e12c-0a22-4f5e-b895-ad2269d638cb" >
-		<file:connection workingDir="C:\Users\LewisCao\Documents\employees" />
-	</file:config>
 	<error-handler name="globalError_Handler" doc:id="57c9bf09-2f0f-4f10-a733-37d6f7e9727d" >
 		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="ffccc898-549e-4ea8-be9a-d9674a566af7" type="MONGO:TIMEOUT">
 			<ee:transform doc:name="MONGO:TIMEOUT" doc:id="bfdf37ac-2110-4d9e-8a47-039804c1348e" >

@@ -12,10 +12,11 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
 		<app.runtime>4.4.0-20211227</app.runtime>
 		<mule.maven.plugin.version>3.5.4</mule.maven.plugin.version>
 		<munit.version>2.3.7</munit.version>
+		<sonar.sources>src/</sonar.sources>
+		<sonar.exclusions>vendor/**, storage/**, resource/**. **/*.java</sonar.exclusions>
 	</properties>
 
 	<build>
@@ -40,7 +41,15 @@
 						<applicationName>${runtime.appname}</applicationName>
 						<workerType>${runtime.vCore}</workerType>
 						<workers>${runtime.workers}</workers>
+						<region>${runtime.region}</region>
 						<objectStoreV2>true</objectStoreV2>
+							<properties>
+								<mule.env>${mule.env}</mule.env>
+								<mule.key>${mule.key}</mule.key>
+								<anypoint.platform.client_id>${platform.client_id}</anypoint.platform.client_id>
+								<anypoint.platform.client_secret>${platform.client_secret}</anypoint.platform.client_secret>
+							</properties>
+					    <skipDeploymentVerification>true</skipDeploymentVerification>
 					</cloudHubDeployment>
 					<sharedLibraries>
 						<sharedLibrary>
@@ -167,7 +176,7 @@
 		<repository>
 			<id>anypoint-exchange-v2</id>
 			<name>Anypoint Exchange</name>
-			<url>https://maven.anypoint.mulesoft.com/api/v2/maven</url>
+			<url>https://maven.anypoint.mulesoft.com/api/v2/organizations/706f4d0a-e4a3-40fb-8365-ae5ac1f0a8d7/maven</url>
 			<layout>default</layout>
 		</repository>
 		<repository>
@@ -182,12 +191,7 @@
 			<url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
 			<layout>default</layout>
 		</repository>
-		<repository>
-			<id>anypoint-exchange</id>
-			<name>Anypoint Exchange</name>
-			<url>https://maven.anypoint.mulesoft.com/api/v1/organizations/706f4d0a-e4a3-40fb-8365-ae5ac1f0a8d7/maven</url>
-			<layout>default</layout>
-		</repository>
+		
 	</repositories>
 
 	<pluginRepositories>
